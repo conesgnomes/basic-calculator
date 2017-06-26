@@ -1,0 +1,20 @@
+{
+  "name": "basic-calc",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Connor and Karina"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
+}
