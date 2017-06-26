@@ -8,9 +8,21 @@ var uglify = require('gulp-uglify');
 var del = require('del');
 var jshint = require('gulp-jshint');
 var buildProduction = utilities.env.production;
-// var browserSync = require('browser-sync').create();
-// var sass = require('gulp-sass');
-// var sourcemaps = require('gulp-sourcemaps');
+var browserSync = require('browser-sync').create();
+
+// clean up any temporary files //
+gulp.task("clean", function(){
+  return del (['build', 'tmp']);
+});
+
+// tells gulp to run minify when deploying our work to a production server. If not, run jsBrowserify //
+gulp.task("build", ['clean'], function() {
+  if (buildProduction) {
+    gulp.start('minifyScripts');
+  } else {
+    gulp.start('jsBrowserify');
+  }
+});
 
 // define task concatInterface. retrieve all files named -interface from the js folder and concat them together //
 gulp.task('concatInterface', function() {
@@ -34,40 +46,6 @@ gulp.task("minifyScripts", ["jsBrowserify"], function() {
     .pipe(gulp.dest("./build/js"));
 });
 
-// get all the js files that bower downloaded, concat, uglify, then place them into the build/js folder where the HTML can point to them //
-gulp.task('jsBower', function(){
-  return gulp.src(lib.ext('js').files)
-  .pipe(concat('vendor.min.js'))
-  .pipe(uglify())
-  .pipe(gulp.dest('./build/js'));
-});
-
-// get all the files that end in css concat, uglify, then place them into the build/css folder where the HTML can point to them //
-gulp.task('cssBower', function(){
-  return gulp.src(lib.ext('css').files)
-  .pipe(concat('vendor.css'))
-  .pipe(gulp.dest('./build/css'));
-});
-
-// combines tasks jsBower and cssBower into one task to be called on later //
-gulp.task('bower', ['jsBower', 'cssBower']);
-
-// clean up any temporary files //
-gulp.task("clean", function(){
-  return del (['build', 'tmp']);
-});
-
-// tells gulp to run minify when deploying our work to a production server. If not, run jsBrowserify //
-gulp.task("build", ['clean'], function() {
-  if (buildProduction) {
-    gulp.start('minifyScripts');
-  } else {
-    gulp.start('jsBrowserify');
-  }
-  gulp.start('bower');
-  gulp.start('cssBuild');
-});
-
 // runs a built in debugger of sorts on all files in the js folder //
 gulp.task('jshint', function(){
   return gulp.src(['js/*.js'])
@@ -85,29 +63,14 @@ gulp.task('serve', ['build'], function(){
   });
 
 //watch for changes in our directories and runs things automatically //
-gulp.watch(['js/*.js'], ['jsBuild']);
-gulp.watch(['bower.json'], ['bowerBuild']);
-gulp.watch(['*.html'], ['htmlBuild']);
-gulp.watch(['scss/*.scss'], ['cssBuild']);
+  gulp.watch(['js/*.js'], ['jsBuild']);
+  gulp.watch(['bower.json'], ['bowerBuild']);
 });
 
-// when watching for changes, constantly updates and reloads files with browswerSync.reload() //
+// when watching for changes, constantly updates and reloads files with browserSync.reload() //
 gulp.task('jsBuild', ['jsBrowserify', 'jshint'], function(){
-  browswerSync.reload();
+  browserSync.reload();
 });
 gulp.task('bowerBuild', ['bower'], function(){
-  browswerSync.reload();
-});
-gulp.task('htmlBuild', function(){
-  browswerSync.reload();
-});
-
-// takes any SASS files and compiles them down to CSS to be used //
-gulp.task('cssBuild', function(){
-  return gulp.src('scss/*.scss')
-    .pipe(sourcemaps.init())
-    .pipe(sass())
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./build/css'))
-    .pipe(browswerSync.stream());
+  browserSync.reload();
 });

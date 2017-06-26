@@ -2,22 +2,61 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript" src="build/js/app.js"></script>
     <title>Calculator</title>
   </head>
   <body>
-    <form class="calc-form" action="index.html" method="post">
+    <h2>Addition</h2>
+    <form class="add-form" action="index.html" method="post">
       <label for="">First Number</label>
-      <input type="number" id="first-num-input">
+      <input type="text" class="first-num-add">
 
       <label for="">Second Number</label>
-      <input type="number" id="second-num-input">
+      <input type="text" class="second-num-add">
 
-      <button type="button" id="add">Add</button>
-      <button type="button" id="subtract">Subtract</button>
-      <button type="button" id="multiply">Multiply</button>
-      <button type="button" id="divide">Divide</button>
+      <button type="submit" class="button">Submit</button>
     </form>
-    <div class="results">
+    <div class="add-results">
+    </div>
+
+    <h2>Subtraction</h2>
+    <form class="sub-form" action="index.html" method="post">
+      <label for="">First Number</label>
+      <input type="text" class="first-num-sub">
+
+      <label for="">Second Number</label>
+      <input type="text" class="second-num-sub">
+
+      <button type="submit" class="button">Submit</button>
+    </form>
+    <div class="sub-results">
+    </div>
+
+    <h2>Multiplication</h2>
+    <form class="mult-form" action="index.html" method="post">
+      <label for="">First Number</label>
+      <input type="text" class="first-num-mult">
+
+      <label for="">Second Number</label>
+      <input type="text" class="second-num-mult">
+
+      <button type="submit" class="button">Submit</button>
+    </form>
+    <div class="mult-results">
+    </div>
+
+    <h2>Division</h2>
+    <form class="div-form" action="index.html" method="post">
+      <label for="">First Number</label>
+      <input type="text" class="first-num-div">
+
+      <label for="">Second Number</label>
+      <input type="text" class="second-num-div">
+
+      <button type="submit" class="button">Submit</button>
+    </form>
+    <div class="div-results">
     </div>
   </body>
 </html>
